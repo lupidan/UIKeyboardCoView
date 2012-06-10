@@ -1,0 +1,289 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C24057511584BB8C0057A421 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24057501584BB8C0057A421 /* UIKit.framework */; };
+		C24057531584BB8C0057A421 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24057521584BB8C0057A421 /* Foundation.framework */; };
+		C24057551584BB8C0057A421 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24057541584BB8C0057A421 /* CoreGraphics.framework */; };
+		C240575B1584BB8C0057A421 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C24057591584BB8C0057A421 /* InfoPlist.strings */; };
+		C240575D1584BB8D0057A421 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C240575C1584BB8D0057A421 /* main.m */; };
+		C24057611584BB8D0057A421 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C24057601584BB8D0057A421 /* AppDelegate.m */; };
+		C24057641584BB8D0057A421 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C24057631584BB8D0057A421 /* ViewController.m */; };
+		C24057671584BB8D0057A421 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C24057651584BB8D0057A421 /* ViewController.xib */; };
+		C24057721584C2390057A421 /* UIKeyboardCoView.m in Sources */ = {isa = PBXBuildFile; fileRef = C24057711584C2380057A421 /* UIKeyboardCoView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C240574C1584BB8C0057A421 /* UIKeyboardCoView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIKeyboardCoView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C24057501584BB8C0057A421 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C24057521584BB8C0057A421 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C24057541584BB8C0057A421 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C24057581584BB8C0057A421 /* UIKeyboardCoView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UIKeyboardCoView-Info.plist"; sourceTree = "<group>"; };
+		C240575A1584BB8C0057A421 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C240575C1584BB8D0057A421 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C240575E1584BB8D0057A421 /* UIKeyboardCoView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIKeyboardCoView-Prefix.pch"; sourceTree = "<group>"; };
+		C240575F1584BB8D0057A421 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C24057601584BB8D0057A421 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C24057621584BB8D0057A421 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		C24057631584BB8D0057A421 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C24057661584BB8D0057A421 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		C24057701584C2380057A421 /* UIKeyboardCoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIKeyboardCoView.h; sourceTree = "<group>"; };
+		C24057711584C2380057A421 /* UIKeyboardCoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIKeyboardCoView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C24057491584BB8C0057A421 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C24057511584BB8C0057A421 /* UIKit.framework in Frameworks */,
+				C24057531584BB8C0057A421 /* Foundation.framework in Frameworks */,
+				C24057551584BB8C0057A421 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C24057411584BB8C0057A421 = {
+			isa = PBXGroup;
+			children = (
+				C24057561584BB8C0057A421 /* UIKeyboardCoView */,
+				C240574F1584BB8C0057A421 /* Frameworks */,
+				C240574D1584BB8C0057A421 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C240574D1584BB8C0057A421 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C240574C1584BB8C0057A421 /* UIKeyboardCoView.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C240574F1584BB8C0057A421 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C24057501584BB8C0057A421 /* UIKit.framework */,
+				C24057521584BB8C0057A421 /* Foundation.framework */,
+				C24057541584BB8C0057A421 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C24057561584BB8C0057A421 /* UIKeyboardCoView */ = {
+			isa = PBXGroup;
+			children = (
+				C240575F1584BB8D0057A421 /* AppDelegate.h */,
+				C24057601584BB8D0057A421 /* AppDelegate.m */,
+				C24057621584BB8D0057A421 /* ViewController.h */,
+				C24057631584BB8D0057A421 /* ViewController.m */,
+				C24057651584BB8D0057A421 /* ViewController.xib */,
+				C24057571584BB8C0057A421 /* Supporting Files */,
+				C24057701584C2380057A421 /* UIKeyboardCoView.h */,
+				C24057711584C2380057A421 /* UIKeyboardCoView.m */,
+			);
+			path = UIKeyboardCoView;
+			sourceTree = "<group>";
+		};
+		C24057571584BB8C0057A421 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C24057581584BB8C0057A421 /* UIKeyboardCoView-Info.plist */,
+				C24057591584BB8C0057A421 /* InfoPlist.strings */,
+				C240575C1584BB8D0057A421 /* main.m */,
+				C240575E1584BB8D0057A421 /* UIKeyboardCoView-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C240574B1584BB8C0057A421 /* UIKeyboardCoView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C240576D1584BB8D0057A421 /* Build configuration list for PBXNativeTarget "UIKeyboardCoView" */;
+			buildPhases = (
+				C24057481584BB8C0057A421 /* Sources */,
+				C24057491584BB8C0057A421 /* Frameworks */,
+				C240574A1584BB8C0057A421 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UIKeyboardCoView;
+			productName = UIKeyboardCoView;
+			productReference = C240574C1584BB8C0057A421 /* UIKeyboardCoView.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C24057431584BB8C0057A421 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = C24057461584BB8C0057A421 /* Build configuration list for PBXProject "UIKeyboardCoView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C24057411584BB8C0057A421;
+			productRefGroup = C240574D1584BB8C0057A421 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C240574B1584BB8C0057A421 /* UIKeyboardCoView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C240574A1584BB8C0057A421 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C240575B1584BB8C0057A421 /* InfoPlist.strings in Resources */,
+				C24057671584BB8D0057A421 /* ViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C24057481584BB8C0057A421 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C240575D1584BB8D0057A421 /* main.m in Sources */,
+				C24057611584BB8D0057A421 /* AppDelegate.m in Sources */,
+				C24057641584BB8D0057A421 /* ViewController.m in Sources */,
+				C24057721584C2390057A421 /* UIKeyboardCoView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C24057591584BB8C0057A421 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C240575A1584BB8C0057A421 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		C24057651584BB8D0057A421 /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C24057661584BB8D0057A421 /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C240576B1584BB8D0057A421 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C240576C1584BB8D0057A421 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C240576E1584BB8D0057A421 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UIKeyboardCoView/UIKeyboardCoView-Prefix.pch";
+				INFOPLIST_FILE = "UIKeyboardCoView/UIKeyboardCoView-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C240576F1584BB8D0057A421 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UIKeyboardCoView/UIKeyboardCoView-Prefix.pch";
+				INFOPLIST_FILE = "UIKeyboardCoView/UIKeyboardCoView-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C24057461584BB8C0057A421 /* Build configuration list for PBXProject "UIKeyboardCoView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C240576B1584BB8D0057A421 /* Debug */,
+				C240576C1584BB8D0057A421 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C240576D1584BB8D0057A421 /* Build configuration list for PBXNativeTarget "UIKeyboardCoView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C240576E1584BB8D0057A421 /* Debug */,
+				C240576F1584BB8D0057A421 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C24057431584BB8C0057A421 /* Project object */;
+}
