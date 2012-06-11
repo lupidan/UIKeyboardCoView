@@ -20,6 +20,12 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+	This class is a subclass of UIView that stays on top of the keyboard. To make it View Controller Independent, we listen to
+    orientation changes from the device directly, so we can apply that smooth move when rotating the device and the keyboard rotates
+    User should not care about setting the frame of this view, but the user should play with autoresize values for the subviews of
+    this view. For best results, the view in the XIB should be HIDDEN at first
+ */
 @interface UIKeyboardCoView : UIView
 
 @end

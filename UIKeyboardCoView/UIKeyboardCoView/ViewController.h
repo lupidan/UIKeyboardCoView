@@ -20,8 +20,21 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+	Nothing important in this view controller.It just has an Outlet and a Action for hiding the keyboard when the background is touched
+ */
 @interface ViewController : UIViewController
-- (IBAction)backgroundTouchDown:(id)sender;
+
+/**
+	The text field
+ */
 @property (retain, nonatomic) IBOutlet UITextField *texField;
+
+/**
+	The background was touched
+	@param sender The UIControl sender of the event
+ */
+- (IBAction)backgroundTouchDown:(id)sender;
+
 
 @end

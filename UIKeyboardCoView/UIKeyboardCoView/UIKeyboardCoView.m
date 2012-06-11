@@ -20,25 +20,54 @@
 
 #import "UIKeyboardCoView.h"
 
+
+
 @interface UIKeyboardCoView ()
-
-@property (nonatomic,assign) BOOL coViewIsAnimating;
-
+/**
+	This is true when the device did rotate. We use this to set up correct options for view animation
+ */
+@property (nonatomic,assign) BOOL deviceDidRotate;
+/**
+	The common init method for the view
+ */
 - (void) keyboardCoViewCommonInit;
+/**
+	This method is called when a notification of type UIKeyboardWillShowNotification is received
+	@param notification The notification object
+ */
 - (void) keyboardWillAppear:(NSNotification*)notification;
-- (void) keyboardDidAppear:(NSNotification*)notification;
+/**
+    This method is called when a notification of type UIKeyboardWillHideNotification is received
+    @param notification The notification object
+ */
 - (void) keyboardWillDissappear:(NSNotification*)notification;
-- (void) keyboardDidDissappear:(NSNotification*)notification;
+/**
+    This method is called when a notification of type UIDeviceOrientationDidChangeNotification is received
+    @param notification The notification object
+ */
+- (void) deviceDidRotate:(NSNotification*)notification;
+/**
+	This method fix a CGRect from the keyboard show and hide notifications and transforms it into a relative to this view's superview CGRect
+	@param originalRect The original CGRect
+	@returns The fixed and this view's superview relative CGRect
+ */
 - (CGRect) fixKeyboardRect:(CGRect)originalRect;
 
 @end
 
 
+
+
+
+
+
+
+
 @implementation UIKeyboardCoView
-@synthesize coViewIsAnimating = _coViewIsAnimating;
+@synthesize deviceDidRotate = _deviceDidRotate;
+
 
 #pragma mark - Init Methods
-
 - (id) init{
     self = [super init];
     if (self){
@@ -67,10 +96,15 @@
 - (void) keyboardCoViewCommonInit{
     //Register for notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDissappear:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidDissappear:) name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceDidRotate:) name:UIDeviceOrientationDidChangeNotification object:nil];
+
 }
+
+
+
+
+
 
 
 #pragma mark - Dealloc method
@@ -82,6 +116,12 @@
 }
 
 
+
+
+
+
+
+
 #pragma mark - Keyboard notification methods
 - (void) keyboardWillAppear:(NSNotification*)notification{
 
@@ -90,12 +130,11 @@
     CGRect endRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat animDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
-    self.coViewIsAnimating = true;
-    
     //Transform rects to local coordinates
     beginRect = [self fixKeyboardRect:beginRect];
     endRect = [self fixKeyboardRect:endRect];
     
+    //Get this view begin and end rect
     CGRect selfBeginRect = CGRectMake(beginRect.origin.x,
                                       beginRect.origin.y - self.frame.size.height,
                                       beginRect.size.width,
@@ -105,14 +144,24 @@
                                        endRect.size.width,
                                        self.frame.size.height);
     
-    
     //Set view position and hidden
     self.frame = selfBeginRect;
     self.alpha = 0.0f;
     [self setHidden:NO];
+    
     //Animate view
+    UIViewAnimationOptions options = UIViewAnimationOptionAllowAnimatedContent;
+    //If the device did rotate, to get a smooth movement, we add this option
+    if (self.deviceDidRotate){
+        //To start from the current view position (not the one we have just set
+        options |= UIViewAnimationOptionBeginFromCurrentState;
+        //And reset the deviceDidRotate to false
+        self.deviceDidRotate = false;
+    }
+    
+    //Start the animation
     [UIView animateWithDuration:animDuration delay:0.0f
-                    options:UIViewAnimationOptionAllowUserInteraction
+                    options:options
                      animations:^(void){
                          self.frame = selfEndingRect;
                          self.alpha = 1.0f;
@@ -120,61 +169,80 @@
                      completion:^(BOOL finished){
                          self.frame = selfEndingRect;
                          self.alpha = 1.0f;
-                         self.coViewIsAnimating = false;
                      }];
         
 }
 
-- (void) keyboardDidAppear:(NSNotification*)notification{
-}
 
 - (void) keyboardWillDissappear:(NSNotification*)notification{
 
-    //Get begin, ending rect and animation duration
-    CGRect beginRect = [[notification.userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-    CGRect endRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGFloat animDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
-    
-    self.coViewIsAnimating = true;
+    //Animate ONLY if the devide did not rotate
+    //If the device did rotate, we are only interested in the appear animation, the dissappear animation
+    //messes up our appear animation (they are executed in the same frame)
+    if (!self.deviceDidRotate){
+        
+        //Get begin, ending rect and animation duration
+        CGRect beginRect = [[notification.userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+        CGRect endRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+        CGFloat animDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
 
-    //Transform rects to local coordinates
-    beginRect = [self fixKeyboardRect:beginRect];
-    endRect = [self fixKeyboardRect:endRect];
-    
-    CGRect selfBeginRect = CGRectMake(beginRect.origin.x,
-                                      beginRect.origin.y - self.frame.size.height,
-                                      beginRect.size.width,
-                                      self.frame.size.height);
-    CGRect selfEndingRect = CGRectMake(endRect.origin.x,
-                                      endRect.origin.y - self.frame.size.height,
-                                      endRect.size.width,
-                                       self.frame.size.height);
-    
-    //Set view position and hidden
-    self.frame = selfBeginRect;
-    self.alpha = 1.0f;
-    //Animate view
-    [UIView animateWithDuration:animDuration delay:0.0f
-                        options:UIViewAnimationOptionAllowUserInteraction
-                     animations:^(void){
-                         self.frame = selfEndingRect;
-                         self.alpha = 0.0f;
-                     }
-                     completion:^(BOOL finished){
-                         self.frame = selfEndingRect;
-                         self.alpha = 0.0f;
-                         [self setHidden:YES];
-                         self.coViewIsAnimating = false;
-                     }];
+        //Transform rects to local coordinates
+        beginRect = [self fixKeyboardRect:beginRect];
+        endRect = [self fixKeyboardRect:endRect];
+        
+        //Get this view begin and end rect
+        CGRect selfBeginRect = CGRectMake(beginRect.origin.x,
+                                          beginRect.origin.y - self.frame.size.height,
+                                          beginRect.size.width,
+                                          self.frame.size.height);
+        CGRect selfEndingRect = CGRectMake(endRect.origin.x,
+                                          endRect.origin.y - self.frame.size.height,
+                                          endRect.size.width,
+                                           self.frame.size.height);
+        
+        //Set view position and hidden
+        self.frame = selfBeginRect;
+        self.alpha = 1.0f;
+
+        //Animate view
+        [UIView animateWithDuration:animDuration delay:0.0f
+                            options:UIViewAnimationOptionAllowAnimatedContent
+                         animations:^(void){
+                             self.frame = selfEndingRect;
+                             self.alpha = 0.0f;
+                         }
+                         completion:^(BOOL finished){
+                             self.frame = selfEndingRect;
+                             self.alpha = 0.0f;
+                             [self setHidden:YES];
+                         }];
+    }
 }
 
-- (void) keyboardDidDissappear:(NSNotification*)notification{
 
+
+
+
+
+#pragma mark - Other notification methodss
+- (void) deviceDidRotate:(NSNotification *)notification{
+    //Only set the deviceDidRotate boolean IF the view is not Hidden (the keyboard has appeared) and the device orientation is correct
+    if ((!self.isHidden) &&
+        ([UIDevice currentDevice].orientation != UIDeviceOrientationFaceDown) && 
+        ([UIDevice currentDevice].orientation != UIDeviceOrientationFaceUp) && 
+        ([UIDevice currentDevice].orientation != UIDeviceOrientationUnknown) )
+        self.deviceDidRotate = true;
 }
+
+
+
+
+
 
 
 #pragma mark - Private methods
 - (CGRect) fixKeyboardRect:(CGRect)originalRect{
+    
     //Get the UIWindow by going through the superviews
     UIView * referenceView = self.superview;
     while ((referenceView != nil) && ![referenceView isKindOfClass:[UIWindow class]]){
