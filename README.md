@@ -2,6 +2,7 @@ UIKeyboardCoView
 ================
 
 A UIView to appear along the iOS default keyboard. It manages also ROTATION when keyboard is present. For iOS4+
+
 The UIKeyboardCoView is totally CUSTOMIZABLE. Just add one UIKeyboardCoView in your XIB and put anything you need inside it :)
 
 ![Landscape Image](https://github.com/lupidan/UIKeyboardCoView/raw/master/landscape.png "Landscape Image")
@@ -10,7 +11,7 @@ The UIKeyboardCoView is totally CUSTOMIZABLE. Just add one UIKeyboardCoView in y
 How to use
 ================
 Just add it as a normal UIView programmatically or trough the Interface Builder.
-It has also a delegate outlet to know when de Keyboard Co View did/will appear/disappear.
+It has also a delegate outlet to know when the Keyboard Co View did/will appear/disappear.
 
 Finally, to manage keyboard rotations correctly, paste this code in your ROOT UIViewController willRotate and didRotate methods, like so:
 
