@@ -16,6 +16,7 @@
 		C24057641584BB8D0057A421 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C24057631584BB8D0057A421 /* ViewController.m */; };
 		C24057671584BB8D0057A421 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C24057651584BB8D0057A421 /* ViewController.xib */; };
 		C24057721584C2390057A421 /* UIKeyboardCoView.m in Sources */ = {isa = PBXBuildFile; fileRef = C24057711584C2380057A421 /* UIKeyboardCoView.m */; };
+		C2CD0EF815FCC63C009BA899 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2CD0EF715FCC63C009BA899 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		C24057661584BB8D0057A421 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		C24057701584C2380057A421 /* UIKeyboardCoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIKeyboardCoView.h; sourceTree = "<group>"; };
 		C24057711584C2380057A421 /* UIKeyboardCoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIKeyboardCoView.m; sourceTree = "<group>"; };
+		C2CD0EF715FCC63C009BA899 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2CD0EF815FCC63C009BA899 /* QuartzCore.framework in Frameworks */,
 				C24057511584BB8C0057A421 /* UIKit.framework in Frameworks */,
 				C24057531584BB8C0057A421 /* Foundation.framework in Frameworks */,
 				C24057551584BB8C0057A421 /* CoreGraphics.framework in Frameworks */,
@@ -70,6 +73,7 @@
 		C240574F1584BB8C0057A421 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C2CD0EF715FCC63C009BA899 /* QuartzCore.framework */,
 				C24057501584BB8C0057A421 /* UIKit.framework */,
 				C24057521584BB8C0057A421 /* Foundation.framework */,
 				C24057541584BB8C0057A421 /* CoreGraphics.framework */,
@@ -282,6 +286,7 @@
 				C240576F1584BB8D0057A421 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

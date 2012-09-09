@@ -1,51 +1,57 @@
 /**
- * UIKeyboardCoView
- *
- * Copyright 2012 Daniel Lupiañez Casares <lupidan@gmail.com>
- * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either 
- * version 2.1 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public 
- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
- * 
- **/
-
+     Copyright 2012 Daniel Lupiañez Casares <lupidan@gmail.com>
+     
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+     
+     http://www.apache.org/licenses/LICENSE-2.0
+     
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ */
 #import "UIKeyboardCoView.h"
 
 
 
 @interface UIKeyboardCoView ()
 /**
-	This is true when the device did rotate. We use this to set up correct options for view animation
+    Is set to true when a Will Rotate notification is posted, and to false when a Did Rotate notification is posted
  */
-@property (nonatomic,assign) BOOL deviceDidRotate;
+@property (nonatomic,assign) BOOL isRotating;
+
 /**
 	The common init method for the view
  */
 - (void) keyboardCoViewCommonInit;
+
 /**
 	This method is called when a notification of type UIKeyboardWillShowNotification is received
 	@param notification The notification object
  */
 - (void) keyboardWillAppear:(NSNotification*)notification;
+
 /**
     This method is called when a notification of type UIKeyboardWillHideNotification is received
     @param notification The notification object
  */
-- (void) keyboardWillDissappear:(NSNotification*)notification;
+- (void) keyboardWillDisappear:(NSNotification*)notification;
+
 /**
-    This method is called when a notification of type UIDeviceOrientationDidChangeNotification is received
+    This method is called when a notification of type UIKeyboardCoViewWillRotateNotification is received
     @param notification The notification object
  */
-- (void) deviceDidRotate:(NSNotification*)notification;
+- (void) viewControllerWillRotate:(NSNotification*)notification;
+
+/**
+    This method is called when a notification of type UIKeyboardCoViewDidRotateNotification is received
+    @param notification The notification object
+ */
+- (void) viewControllerDidRotate:(NSNotification*)notification;
+
 /**
 	This method fix a CGRect from the keyboard show and hide notifications and transforms it into a relative to this view's superview CGRect
 	@param originalRect The original CGRect
@@ -64,10 +70,16 @@
 
 
 @implementation UIKeyboardCoView
-@synthesize deviceDidRotate = _deviceDidRotate;
+@synthesize delegate = _delegate;
+@synthesize isRotating = _isRotating;
+
+
+
+
 
 
 #pragma mark - Init Methods
+
 - (id) init{
     self = [super init];
     if (self){
@@ -94,12 +106,22 @@
 
 
 - (void) keyboardCoViewCommonInit{
+    //It's not rotating
+    self.isRotating = NO;
+    
     //Register for notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDissappear:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceDidRotate:) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewControllerWillRotate:) name:UIKeyboardCoViewWillRotateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewControllerDidRotate:) name:UIKeyboardCoViewDidRotateNotification object:nil];
 
 }
+
+
+
+
+
+
 
 
 
@@ -122,9 +144,15 @@
 
 
 
+
+
+
+
+
+
 #pragma mark - Keyboard notification methods
 - (void) keyboardWillAppear:(NSNotification*)notification{
-
+    
     //Get begin, ending rect and animation duration
     CGRect beginRect = [[notification.userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
     CGRect endRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -149,17 +177,15 @@
     self.alpha = 0.0f;
     [self setHidden:NO];
     
-    //Animate view
+    //If it's rotating, begin animation from current state
     UIViewAnimationOptions options = UIViewAnimationOptionAllowAnimatedContent;
-    //If the device did rotate, to get a smooth movement, we add this option
-    if (self.deviceDidRotate){
-        //To start from the current view position (not the one we have just set
+    if (self.isRotating){
         options |= UIViewAnimationOptionBeginFromCurrentState;
-        //And reset the deviceDidRotate to false
-        self.deviceDidRotate = false;
     }
     
     //Start the animation
+    if ([self.delegate respondsToSelector:@selector(keyboardCoViewWillAppear:)])
+        [self.delegate keyboardCoViewWillAppear:self];
     [UIView animateWithDuration:animDuration delay:0.0f
                     options:options
                      animations:^(void){
@@ -169,18 +195,18 @@
                      completion:^(BOOL finished){
                          self.frame = selfEndingRect;
                          self.alpha = 1.0f;
+                         if ([self.delegate respondsToSelector:@selector(keyboardCoViewDidAppear:)])
+                             [self.delegate keyboardCoViewDidAppear:self];
                      }];
         
 }
 
 
-- (void) keyboardWillDissappear:(NSNotification*)notification{
+- (void) keyboardWillDisappear:(NSNotification*)notification{
 
-    //Animate ONLY if the devide did not rotate
-    //If the device did rotate, we are only interested in the appear animation, the dissappear animation
-    //messes up our appear animation (they are executed in the same frame)
-    if (!self.deviceDidRotate){
-        
+    //Start animation ONLY if the view will not rotate
+    if (!self.isRotating){
+    
         //Get begin, ending rect and animation duration
         CGRect beginRect = [[notification.userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
         CGRect endRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -204,9 +230,15 @@
         self.frame = selfBeginRect;
         self.alpha = 1.0f;
 
+        
+        //Animation options
+        UIViewAnimationOptions options = UIViewAnimationOptionAllowAnimatedContent;
+        
         //Animate view
+        if ([self.delegate respondsToSelector:@selector(keyboardCoViewWillDisappear:)])
+            [self.delegate keyboardCoViewWillDisappear:self];
         [UIView animateWithDuration:animDuration delay:0.0f
-                            options:UIViewAnimationOptionAllowAnimatedContent
+                            options:options
                          animations:^(void){
                              self.frame = selfEndingRect;
                              self.alpha = 0.0f;
@@ -215,6 +247,8 @@
                              self.frame = selfEndingRect;
                              self.alpha = 0.0f;
                              [self setHidden:YES];
+                             if ([self.delegate respondsToSelector:@selector(keyboardCoViewDidDisappear:)])
+                                 [self.delegate keyboardCoViewDidDisappear:self];
                          }];
     }
 }
@@ -224,15 +258,24 @@
 
 
 
-#pragma mark - Other notification methodss
-- (void) deviceDidRotate:(NSNotification *)notification{
-    //Only set the deviceDidRotate boolean IF the view is not Hidden (the keyboard has appeared) and the device orientation is correct
-    if ((!self.isHidden) &&
-        ([UIDevice currentDevice].orientation != UIDeviceOrientationFaceDown) && 
-        ([UIDevice currentDevice].orientation != UIDeviceOrientationFaceUp) && 
-        ([UIDevice currentDevice].orientation != UIDeviceOrientationUnknown) )
-        self.deviceDidRotate = true;
+
+
+
+
+
+#pragma mark - Custom rotation notification methods
+- (void) viewControllerWillRotate:(NSNotification*)notification{
+    //Is rotating
+    self.isRotating = YES;
 }
+
+
+- (void) viewControllerDidRotate:(NSNotification*)notification{
+    //Is not rotating
+    self.isRotating = NO;
+}
+
+
 
 
 
